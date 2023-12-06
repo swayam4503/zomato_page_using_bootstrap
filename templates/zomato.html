@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zomato Cart</title>
+    <link rel="stylesheet" href="bootstrap\css\bootstrap.css">
+    <link rel="stylesheet" href="FA\css\all.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-danger">Zomato cart:</h1>
+        <p class="lead">
+            <!-- Your placeholder text here -->
+        </p>
+        <button class="btn btn-outline-danger btn-md">Order Now</button>
+    </div>
+    <div class="container-fluid mt-3">
+        <table class="table">
+            <thead class="text-center table-danger">
+                <tr>
+                    <th>S.No</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr>
+                    <td>1</td>
+                    <td> <img src="img/biriyani.png" height="50px"> </td>
+                    <td>Biriyani</td>
+                    <td class="item-price">&#8377;299</td>
+                    <td>
+                        <button class="dec-quantity" data-index="0"><i class="fa fa-minus-circle"></i></button>
+                        <span class="display-quantity">0</span>
+                        <button class="inc-quantity" data-index="0"><i class="fa fa-plus-circle"></i></button>
+                    </td>
+                    <td class="total-price">&#8377;0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td> <img src="img/pakoda.jpg" height="50px"> </td>
+                    <td>Chicken Kebab</td>
+                    <td class="item-price">&#8377;199</td>
+                    <td>
+                        <button class="dec-quantity" data-index="1"><i class="fa fa-minus-circle"></i></button>
+                        <span class="display-quantity">0</span>
+                        <button class="inc-quantity" data-index="1"><i class="fa fa-plus-circle"></i></button>
+                    </td>
+                    <td class="total-price">&#8377;0</td>
+                </tr>
+                <!-- Add similar rows for other items -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Get all elements with class names
+        let btnIncQuantityTags = document.querySelectorAll('.inc-quantity');
+        let btnDecQuantityTags = document.querySelectorAll('.dec-quantity');
+        let displayQuantityTags = document.querySelectorAll('.display-quantity');
+        let itemPriceTags = document.querySelectorAll('.item-price');
+        let totalPriceTags = document.querySelectorAll('.total-price');
+
+        // Add event listeners to all quantity buttons
+        btnIncQuantityTags.forEach(btn => {
+            btn.addEventListener('click', () => increaseQuantity(btn));
+        });
+
+        btnDecQuantityTags.forEach(btn => {
+            btn.addEventListener('click', () => decreaseQuantity(btn));
+        });
+
+        function increaseQuantity(btn) {
+            let index = btn.getAttribute('data-index');
+            let quantity = parseInt(displayQuantityTags[index].innerText);
+            quantity++;
+            displayQuantityTags[index].innerText = quantity;
+
+            let itemPrice = parseFloat(itemPriceTags[index].innerText.replace('₹', ''));
+            let totalPrice = quantity * itemPrice;
+            totalPriceTags[index].innerText = '₹' + totalPrice.toFixed(2);
+        }
+
+        function decreaseQuantity(btn) {
+            let index = btn.getAttribute('data-index');
+            let quantity = parseInt(displayQuantityTags[index].innerText);
+            if (quantity > 0) {
+                quantity--;
+                displayQuantityTags[index].innerText = quantity;
+
+                let itemPrice = parseFloat(itemPriceTags[index].innerText.replace('₹', ''));
+                let totalPrice = quantity * itemPrice;
+                totalPriceTags[index].innerText = '₹' + totalPrice.toFixed(2);
+            }
+        }
+    </script>
+</body>
+</html>
